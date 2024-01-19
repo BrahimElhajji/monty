@@ -37,9 +37,14 @@ int exec(char *cont, stack_t **stack, unsigned int c, FILE *file)
 			return (0);
 		}
 	}
+	if (op && opst[i].opcode == NULL)
+	{
 	fprintf(stderr, "L%d: unknown instruction %s\n", c, op);
 	fclose(file);
 	free(cont);
 	free_stack(*stack);
+	free(arg_copy);
 	exit(EXIT_FAILURE);
+	}
+	return (1);
 }

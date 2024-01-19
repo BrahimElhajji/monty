@@ -1,11 +1,12 @@
 #include "monty.h"
 
 /**
- * push - add new node to the stack
- * @head: stack head
- * @line_number: counter
+ * push - add node to the stack
+ * @stack: pointer to pointer to the stack head
+ * @line_number: line_number
+ * Return: no return
  */
-void push(stack_t **head, unsigned int line_number)
+void push(stack_t **stack, unsigned int line_number)
 {
 	int n;
 
@@ -20,7 +21,7 @@ void push(stack_t **head, unsigned int line_number)
 			fprintf(stderr, "L%d: usage: push integer\n", line_number);
 			fclose(b.file);
 			free(b.cont);
-			free_stack(*head);
+			free_stack(*stack);
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -29,12 +30,12 @@ void push(stack_t **head, unsigned int line_number)
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
 		fclose(b.file);
 		free(b.cont);
-		free_stack(*head);
+		free_stack(*stack);
 		exit(EXIT_FAILURE);
 	}
 
 	if (b.lif == 0)
-		new_node(head, n);
+		new_node(stack, n);
 	else
-		new_queue(head, n);
+		new_queue(stack, n);
 }

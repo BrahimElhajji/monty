@@ -41,9 +41,9 @@ int exec(char *cont, stack_t **stack, unsigned int c, FILE *file)
 
 	unsigned int i = 0;
 	char *op = strtok(cont, " \n\t");
-
-	// Replace '\r' with '\0' to handle Windows line endings
 	char *newline_char = strchr(cont, '\r');
+	char *arg_copy;
+
 	if (newline_char != NULL)
 	{
 		*newline_char = '\0';
@@ -52,7 +52,7 @@ int exec(char *cont, stack_t **stack, unsigned int c, FILE *file)
 	if (op && op[0] == '#')
 		return (0);
 
-	char *arg_copy = strtok(NULL, " \n\t");
+	arg_copy = strtok(NULL, " \n\t");
 	if (arg_copy)
 		b.arg = strdup_custom(arg_copy);
 	else
@@ -83,4 +83,3 @@ int exec(char *cont, stack_t **stack, unsigned int c, FILE *file)
 
 	return (1);
 }
-

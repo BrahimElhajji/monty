@@ -50,7 +50,6 @@ void free_stack(stack_t *stack);
 void new_node(stack_t **stack, int n);
 void new_queue(stack_t **stack, int n);
 
-// Function prototypes
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);

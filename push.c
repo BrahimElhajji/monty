@@ -15,7 +15,6 @@ void push(stack_t **head, unsigned int counter)
 		char *endptr;
 		n = strtol(b.arg, &endptr, 10);
 
-		// Check if conversion was successful
 		if (*endptr != '\0' && !isspace((unsigned char)*endptr))
 		{
 			fprintf(stderr, "L%d: usage: push integer\n", counter);

@@ -1,34 +1,13 @@
 #include "monty.h"
 
 /**
- * execute - executes the opcode
+ * exec - executes the opcode
  * @stack: head linked list - stack
- * @counter: line_counter
+ * @c: line_counter
  * @file: pointer to the Monty file
- * @content: line content
+ * @cont: line content
  * Return: no return
  */
-
-char *strdup_custom(const char *str)
-{
-	char *dup_str = NULL;
-	size_t len;
-
-	if (str == NULL)
-		return NULL;
-
-	len = strlen(str);
-
-	dup_str = malloc(len + 1);
-
-	if (dup_str == NULL)
-		return NULL;
-
-	memcpy(dup_str, str, len);
-	dup_str[len] = '\0';
-
-	return dup_str;
-}
 
 int exec(char *cont, stack_t **stack, unsigned int c, FILE *file)
 {
@@ -42,7 +21,7 @@ int exec(char *cont, stack_t **stack, unsigned int c, FILE *file)
 	unsigned int i = 0;
 	char *op = strtok(cont, " \n\t");
 	char *newline_char = strchr(cont, '\r');
-	char *arg_copy;
+	char *arg_copy = strtok(NULL, " \n\t");
 
 	if (newline_char != NULL)
 	{
@@ -52,12 +31,10 @@ int exec(char *cont, stack_t **stack, unsigned int c, FILE *file)
 	if (op && op[0] == '#')
 		return (0);
 
-	arg_copy = strtok(NULL, " \n\t");
 	if (arg_copy)
 		b.arg = strdup_custom(arg_copy);
 	else
 		b.arg = NULL;
-
 
 	while (opst[i].opcode && op)
 	{
@@ -78,8 +55,27 @@ int exec(char *cont, stack_t **stack, unsigned int c, FILE *file)
 		free_stack(*stack);
 		exit(EXIT_FAILURE);
 	}
-
 	free(arg_copy);
-
 	return (1);
+}
+
+char *strdup_custom(const char *str)
+{
+	char *dup_str = NULL;
+	size_t len;
+
+	if (str == NULL)
+		return (NULL);
+
+	len = strlen(str);
+
+	dup_str = malloc(len + 1);
+
+	if (dup_str == NULL)
+		return (NULL);
+
+	memcpy(dup_str, str, len);
+	dup_str[len] = '\0';
+
+	return (dup_str);
 }

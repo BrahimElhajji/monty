@@ -1,5 +1,11 @@
 #include "monty.h"
 
+/**
+ * new_queue - function that add a new queue
+ * @stack: pointer to pointer to the head of the nodes
+ * @n: an integer
+ */
+
 void new_queue(stack_t **stack, int n)
 {
 	stack_t *new_node = malloc(sizeof(stack_t));

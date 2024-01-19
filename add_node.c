@@ -1,8 +1,16 @@
 #include "monty.h"
 
+/**
+ * new_node - functione that create new node
+ * @stack: pointer to a pointer to the head of the nodes
+ * @n: an integer
+ */
+
 void new_node(stack_t **stack, int n)
 {
-	stack_t *new_node = malloc(sizeof(stack_t));
+	stack_t *new_node;
+
+	new_node = malloc(sizeof(stack_t));
 	if (new_node == NULL)
 	{
 		fprintf(stderr, "Error: malloc failed\n");

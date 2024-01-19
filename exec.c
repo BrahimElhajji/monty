@@ -13,6 +13,7 @@ int exec(char *cont, stack_t **stack, unsigned int c, FILE *file)
 {
 	instruction_t opst[] = {
 		{"push", push}, {"pall", pall}, {"pint", pint}, {"pop", pop}, {"swap", swap},
+		{"add", add},
 		{NULL, NULL}
 	};
 

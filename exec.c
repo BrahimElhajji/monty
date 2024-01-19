@@ -13,8 +13,9 @@ int exec(char *cont, stack_t **stack, unsigned int c, FILE *file)
 {
 	instruction_t opst[] = {
 		{"push", push}, {"pall", pall}, {"pint", pint}, {"pop", pop}, {"swap", swap},
-		{"add", add}, {"pop", pop}, {"sub", sub}, {"mul", mul}, {"div", my_div},
-		{"mod", mod}, {"pchar", pchar}, {"pstr", pstr}, {"rotl", rotl}, {"rotr", rotr},
+		{"add", add}, {"sub", sub}, {"mul", mul}, {"div", my_div}, {"mod", mod},
+		{"pchar", pchar}, {"pstr", pstr}, {"rotl", rotl}, {"rotr", rotr},
+		{"queue", my_queue}, {"stack", my_stack},
 		{NULL, NULL}
 	};
 

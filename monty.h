@@ -60,6 +60,7 @@ void sub(stack_t **stack, unsigned int line_number);
 void mul(stack_t **stack, unsigned int line_number);
 void my_div(stack_t **stack, unsigned int line_number);
 void mod(stack_t **stack, unsigned int line_number);
+void pchar(stack_t **stack, unsigned int line_number);
 int exec(char *cont, stack_t **stack, unsigned int c, FILE *file);
 void pop(stack_t **stack, unsigned int line_number);
 char *strdup_custom(const char *str);

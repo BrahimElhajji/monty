@@ -18,4 +18,5 @@ void unknown_error(unsigned int line_number, const char *opcode)
 void malloc_error(void)
 {
 	fprintf(stderr, "Error: malloc failed\n");
+	exit(EXIT_FAILURE);
 }

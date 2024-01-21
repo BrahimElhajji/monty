@@ -1,51 +1,55 @@
 #include "monty.h"
 
 /**
- * exec - executes the opcode
- * @cont: line content
- * @stack: head linked list - stack
- * @c: line_counter
- * @file: pointer to the Monty file
- * Return: no return
+ * execute - Execute instructions from a file on a stack
+ * @file: Pointer to the file containing instructions
+ * @stack: Pointer to pointer to the stack head
+ * @instructions: Array of instruction structures
+ * @num_instructions: Number of instructions in the array.=
  */
-int exec(char *cont, stack_t **stack, unsigned int c, FILE *file)
+void execute(FILE *file, stack_t **stack, instruction_t instructions[], size_t num_instructions)
 {
-	instruction_t opst[] = {
-		{"push", push}, {"pall", pall}, {"pint", pint}, {"pop", pop},
-		{"swap", swap}, {"add", add}, {"nop", nop}, {"sub", sub},
-		{"div", my_div}, {"mul", mul}, {"mod", mod}, {"pchar", pchar},
-		{"pstr", pstr}, {"rotl", rotl}, {"rotr", rotr}, {NULL, NULL}
-	};
+	char opcode[100], *fmt = "L%d: %s %s\n";
+	unsigned int line_number = 0, i;
 
-	char *op = strtok(cont, " \n\t");
-	char *newline_char = strchr(cont, '\r');
-	char *arg_copy = strtok(NULL, " \n\t");
-	unsigned int i = 0;
-
-	if (newline_char != NULL)
-		*newline_char = '\0';
-	if (op && op[0] == '#')
-		return (0);
-
-	b.arg = (arg_copy) ? strdup_custom(arg_copy) : NULL;
-
-	while (opst[i].opcode && op)
+	while (fgets(opcode, sizeof(opcode), file) != NULL)
 	{
-		if (!strcmp(op, opst[i].opcode))
+		line_number++;
+		strtok(opcode, "\n");
+
+		if (opcode[0] == '#')
+			continue;
+
+		for (i = 0; i < num_instructions; i++)
 		{
-			opst[i].f(stack, c);
-			return (0);
+			if (strncmp(opcode, instructions[i].opcode, strlen(instructions[i].opcode)) == 0)
+			{
+				if (strcmp(instructions[i].opcode, "push") == 0)
+				{
+					int value;
+
+					if (sscanf(opcode + strlen(instructions[i].opcode), " %d", &value) != 1)
+					{
+						fprintf(stderr, fmt, line_number, "usage:", "push integer");
+						fclose(file);
+						free_stack(*stack);
+						exit(EXIT_FAILURE);
+					}
+
+					sprintf(Monty_G.g_value, "%d", value);
+				}
+
+				instructions[i].f(stack, line_number);
+				break;
+			}
 		}
-		i++;
+
+		if (i == num_instructions)
+		{
+			unknown_error(line_number, opcode);
+			fclose(file);
+			free_stack(*stack);
+			exit(EXIT_FAILURE);
+		}
 	}
-	if (op && opst[i].opcode == NULL)
-	{
-	fprintf(stderr, "L%d: unknown instruction %s\n", c, op);
-	fclose(file);
-	free(cont);
-	free_stack(*stack);
-	free(arg_copy);
-	exit(EXIT_FAILURE);
-	}
-	return (1);
 }

@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdbool.h>
+
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -37,38 +39,24 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-typedef struct b_s
+typedef struct Monty_G_s
 {
-	char *arg;
-	FILE *file;
-	char *cont;
-	int lif;
-}  b_t;
-extern b_t b;
+	char g_value[100];
 
+} Monty_G_t;
+
+extern Monty_G_t Monty_G;
+extern FILE *file;
+
+void error(void);
+void file_open_error(const char *filename);
+void unknown_error(unsigned int line_number, const char *opcode);
+void malloc_error(void);
 void free_stack(stack_t *stack);
-void new_node(stack_t **stack, int n);
-void new_queue(stack_t **stack, int n);
-
+void execute(FILE *file, stack_t **stack, instruction_t instructions[], size_t num_instructions);
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
-void swap(stack_t **stack, unsigned int line_number);
-void add(stack_t **stack, unsigned int line_number);
-void nop(stack_t **stack, unsigned int line_number);
-void sub(stack_t **stack, unsigned int line_number);
-void mul(stack_t **stack, unsigned int line_number);
-void my_div(stack_t **stack, unsigned int line_number);
-void mod(stack_t **stack, unsigned int line_number);
-void pchar(stack_t **stack, unsigned int line_number);
-void pstr(stack_t **stack, unsigned int line_number);
-void rotl(stack_t **stack, unsigned int line_number);
-void rotr(stack_t **stack, unsigned int line_number);
-void my_stack(stack_t **stack, unsigned int line_number);
-void my_queue(stack_t **stack, unsigned int line_number);
-int exec(char *cont, stack_t **stack, unsigned int c, FILE *file);
-void pop(stack_t **stack, unsigned int line_number);
-char *strdup_custom(const char *str);
 
 
 #endif

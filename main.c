@@ -1,7 +1,4 @@
 #include "monty.h"
-#define _GNU_SOURCE
-
-b_t b = {NULL, NULL, NULL, 0};
 
 /**
  * main - monty code interpreter
@@ -10,44 +7,33 @@ b_t b = {NULL, NULL, NULL, 0};
  * Return: always 0
  */
 
+Monty_G_t Monty_G;
+FILE *file;
+
 int main(int argc, char *argv[])
 {
-	char *content;
 	FILE *file;
-	size_t size = 0;
-	ssize_t read_line = 1;
 	stack_t *stack = NULL;
-	unsigned int counter = 0;
+	instruction_t instructions[] = {{"push", push},
+		{"pall", pall}, {"pint", pint},};
+	size_t num_instructions = sizeof(instructions) / sizeof(instructions[0]);
 
 	if (argc != 2)
 	{
-		fprintf(stderr, "USAGE: monty file\n");
-		exit(EXIT_FAILURE);
+		error();
+		return (EXIT_FAILURE);
 	}
 
 	file = fopen(argv[1], "r");
-	b.file = file;
-
 	if (!file)
 	{
-		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
-		exit(EXIT_FAILURE);
+		file_open_error(argv[1]);
+		return (EXIT_FAILURE);
 	}
 
-	while (read_line > 0)
-	{
-		content = NULL;
-		read_line = getline(&content, &size, file);
-		b.cont = content;
-		counter++;
-
-		if (read_line > 0)
-			exec(content, &stack, counter, file);
-
-		free(content);
-	}
-
-	free_stack(stack);
+	execute(file, &stack, instructions, num_instructions);
 	fclose(file);
-	return (0);
+	free_stack(stack);
+
+	return (EXIT_SUCCESS);
 }

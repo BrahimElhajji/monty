@@ -1,9 +1,9 @@
 #include "monty.h"
 /**
- * pint - prints the top
- * @stack: pointer to pointer to the stack head
- * @line_number: counter
- */
+ *  * pint - prints the top
+ *   * @stack: pointer to pointer to the stack head
+ *    * @line_number: counter
+ *     */
 
 void pint(stack_t **stack, unsigned int line_number)
 {

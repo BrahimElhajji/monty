@@ -13,6 +13,7 @@ void file_open_error(const char *filename)
 void unknown_error(unsigned int line_number, const char *opcode)
 {
 	fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
+	exit(EXIT_FAILURE);
 }
 
 void malloc_error(void)

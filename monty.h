@@ -53,7 +53,7 @@ void file_open_error(const char *filename);
 void unknown_error(unsigned int line_number, const char *opcode);
 void malloc_error(void);
 void free_stack(stack_t *stack);
-void execute(FILE *file, stack_t **stack, instruction_t instructions[], size_t num_instructions);
+void execute(FILE *file, stack_t **stack, instruction_t instr[], size_t num_instr);
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);

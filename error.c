@@ -3,11 +3,13 @@
 void error(void)
 {
 	fprintf(stderr, "USAGE: monty file\n");
+	exit(EXIT_FAILURE);
 }
 
 void file_open_error(const char *filename)
 {
 	fprintf(stderr, "Error: Can't open file %s\n", filename);
+	exit(EXIT_FAILURE);
 }
 
 void unknown_error(unsigned int line_number, const char *opcode)

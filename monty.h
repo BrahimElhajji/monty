@@ -49,6 +49,7 @@ extern b_t b;
 void free_stack(stack_t *stack);
 void new_node(stack_t **stack, long num);
 void new_queue(stack_t **stack, int n);
+void push_input(stack_t **stack, unsigned int line_number);
 
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);

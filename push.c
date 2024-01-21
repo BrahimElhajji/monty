@@ -1,41 +1,49 @@
 #include "monty.h"
 
 /**
- * push - add node to the stack
- * @stack: pointer to pointer to the stack head
- * @line_number: the number of lines
- * Return: no return
+ * push - entry point
+ * @stack: stack
+ * @line_number: counter
  */
 
 void push(stack_t **stack, unsigned int line_number)
 {
-	stack_t *new_node;
-	int value;
+	size_t len;
+	char *endptr;
+	long num;
 
-	if (!Monty_G.g_value || !isdigit(*Monty_G.g_value))
+	if (b.arg == NULL || *b.arg == '\0')
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
-		fclose(file);
+		fclose(b.file);
+		free(b.cont);
 		free_stack(*stack);
 		exit(EXIT_FAILURE);
 	}
 
-	value = atoi(Monty_G.g_value);
-	new_node = malloc(sizeof(stack_t));
-	if (!new_node)
+	while (isspace((unsigned char)*b.arg))
+		b.arg++;
+
+	
+	len = strlen(b.arg);
+
+	while (len > 0 && isspace((unsigned char)b.arg[len - 1]))
 	{
-		malloc_error();
-		fclose(file);
+		b.arg[len - 1] = '\0';
+		len--;
+	}
+
+	num = strtol(b.arg, &endptr, 10);
+
+	if (*endptr != '\0' && !isspace((unsigned char)*endptr))
+	{
+		fprintf(stderr, "L%d: usage: push integer\n", line_number);
+		fclose(b.file);
+		free(b.cont);
 		free_stack(*stack);
 		exit(EXIT_FAILURE);
 	}
 
-	new_node->n = value;
-	new_node->prev = NULL;
-	new_node->next = *stack;
+	new_node(stack, num);
 
-	if (*stack)
-		(*stack)->prev = new_node;
-
-	*stack = new_node;
 }

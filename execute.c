@@ -7,7 +7,6 @@
  * @instr: Array of instruction structures
  * @num_instr: Number of instr in the array.=
  */
-
 void execute(FILE *file, stack_t **stack, instruction_t instr[], size_t num_instr)
 {
 	char opcode[100], *fmt = "L%d: %s %s\n";
@@ -18,8 +17,8 @@ void execute(FILE *file, stack_t **stack, instruction_t instr[], size_t num_inst
 	while (fgets(opcode, sizeof(opcode), file) != NULL)
 	{
 		line_number++;
-
 		offset = 0;
+
 		while (isspace(opcode[offset]))
 			offset++;
 
@@ -42,13 +41,15 @@ void execute(FILE *file, stack_t **stack, instruction_t instr[], size_t num_inst
 					}
 					sprintf(Monty_G.g_value, "%d", value);
 				}
+
 				instr[i].f(stack, line_number);
 				break;
 			}
 		}
+
 		if (i == num_instr)
 		{
-			unknown_error(line_number, opcode + offset);
+			fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode + offset);
 			fclose(file);
 			free_stack(*stack);
 			exit(EXIT_FAILURE);

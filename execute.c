@@ -10,25 +10,30 @@
 
 void execute(FILE *file, stack_t **stack, instruction_t instr[], size_t num_instr)
 {
-
 	char opcode[100], *fmt = "L%d: %s %s\n";
 	unsigned int line_number = 0, i;
+	size_t offset;
 	int value;
 
 	while (fgets(opcode, sizeof(opcode), file) != NULL)
 	{
 		line_number++;
-		strtok(opcode, "\n");
-		if (opcode[0] == '#')
+
+		offset = 0;
+		while (isspace(opcode[offset]))
+			offset++;
+
+		strtok(opcode + offset, "\n");
+		if (opcode[offset] == '#' || opcode[offset] == '\0')
 			continue;
+
 		for (i = 0; i < num_instr; i++)
 		{
-			if (strncmp(opcode, instr[i].opcode,
-						strlen(instr[i].opcode)) == 0)
+			if (strncmp(opcode + offset, instr[i].opcode, strlen(instr[i].opcode)) == 0)
 			{
 				if (strcmp(instr[i].opcode, "push") == 0)
 				{
-					if (sscanf(opcode + strlen(instr[i].opcode), " %d", &value) != 1)
+					if (sscanf(opcode + offset + strlen(instr[i].opcode), " %d", &value) != 1)
 					{
 						fprintf(stderr, fmt, line_number, "usage:", "push integer");
 						fclose(file);
@@ -43,7 +48,7 @@ void execute(FILE *file, stack_t **stack, instruction_t instr[], size_t num_inst
 		}
 		if (i == num_instr)
 		{
-			unknown_error(line_number, opcode);
+			unknown_error(line_number, opcode + offset);
 			fclose(file);
 			free_stack(*stack);
 			exit(EXIT_FAILURE);

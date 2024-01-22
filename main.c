@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 {
 	FILE *file;
 	stack_t *stack = NULL;
-	instruction_t instructions[] = {{"push", push},
+	instruction_t instructions[] = {{"push", push}, {"pop", pop},
 		{"pall", pall}, {"pint", pint},};
 	size_t num_instructions = sizeof(instructions) / sizeof(instructions[0]);
 
